@@ -1,4 +1,5 @@
 import copy
+##An exact Max-SAT solver
 def dpll(instance, setvar = [], setval={}):
     instance.sort(key = lambda s: len(s)) #sort by length,
                                           #so single var clauses are first
