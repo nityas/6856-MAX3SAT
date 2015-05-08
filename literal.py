@@ -37,6 +37,7 @@ def num_literals(inp):
 def num_clauses(inp):
 	return len(inp)
 
+#counts number of satisfied clauses
 def satisfied_clauses(inp, assignment):
 	satisfied_clauses = 0
 	for clause in inp:
