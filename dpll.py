@@ -1,64 +1,64 @@
 import copy
 ##An exact Max-SAT solver
-def dpll(instance, setvar = [], setval={}):
+def dpll(instance, set_var, set_val={}):
     instance.sort(key = lambda s: len(s)) #sort by length,
                                           #so single var clauses are first
     counter = 0
     for clause in instance:
         if len(clause) == 1:
             counter+=1
-            #setvar.append(clause[0]) #may need to check that if we have i and -i, output unsatisfiable
-            #print setvar
+            #set_var.append(clause[0]) #may need to check that if we have i and -i, output unsatisfiable
+            #print set_var
             if clause[0] > 0:
-                setval[clause[0]] = 1
+                set_val[clause[0]] = 1
             else:
-                setval[clause[0] * -1] = -1
+                set_val[clause[0] * -1] = -1
         else:
             break
-    setvar.sort()
-    cvar = setvar[0]
-    setvar = setvar[1:]
-    numsatisfied, assign = recurse(instance[counter:], cvar, setvar, setval)
-    numsatisfied += counter
-    print numsatisfied, assign
+    set_var.sort()
+    cvar = set_var[0]
+    set_var = set_var[1:]
+    num_satisfied, assign = recurse(instance[counter:], cvar, set_var, set_val)
+    num_satisfied += counter
+    print num_satisfied, assign
 
-def recurse(instance, cvar, setvar, setval):
+def recurse(instance, cvar, set_var, set_val):
     notsatisfied = []
     satcounter = 0
-    numsatisfiedpos = 0
-    numsatisfiedneg = 0
-    assignpos = 0
-    assignneg = 0
-    if cvar in setval.keys(): #the variable has already had it's value set, move on to next variable
+    num_satisfied_pos = 0
+    num_satisfied_neg = 0
+    assign_pos = 0
+    assign_neg = 0
+    if cvar in set_val.keys(): #the variable has already had it's value set, move on to next variable
                               #count number of clauses satisfied?
-        cvar = cvar * setval[cvar]
+        cvar = cvar * set_val[cvar]
         for clause in instance:
             if cvar not in clause:
                 notsatisfied.append(clause)
             else:
                 satcounter+=1
-        if len(setvar) > 0:
-            counter, assign = recurse(notsatisfied, setvar[0], setvar[1:], setval)
+        if len(set_var) > 0:
+            counter, assign = recurse(notsatisfied, set_var[0], set_var[1:], set_val)
             return counter+satcounter, assign
         else:
-            return satcounter, copy.deepcopy(setval)
+            return satcounter, copy.deepcopy(set_val)
     else:
         #try setting to true
-        tmp = copy.deepcopy(setval)
+        tmp = copy.deepcopy(set_val)
         tmp[cvar] = 1
         for clause in instance:
             if cvar not in clause:
                 notsatisfied.append(clause)
             else:
                 satcounter+=1
-        if len(setvar) > 0:
-            numsatisfiedpos, assignpos = recurse(notsatisfied, setvar[0], setvar[1:], tmp)
-            numsatisfiedpos += satcounter
+        if len(set_var) > 0:
+            num_satisfied_pos, assign_pos = recurse(notsatisfied, set_var[0], set_var[1:], tmp)
+            num_satisfied_pos += satcounter
         else:
-            numsatisfiedpos = satcounter
-            assignpos = tmp
+            num_satisfied_pos = satcounter
+            assign_pos = tmp
         #try setting to false
-        setval[cvar] = -1
+        set_val[cvar] = -1
         notsatisfied = []
         satcounter = 0
         cvar = -1 * cvar
@@ -68,15 +68,15 @@ def recurse(instance, cvar, setvar, setval):
             else:
                 satcounter+=1
         
-        if len(setvar) > 0:
-            numsatisfiedneg, assignneg = recurse(notsatisfied, setvar[0], setvar[1:], setval)
-            numsatisfiedneg+=satcounter
+        if len(set_var) > 0:
+            num_satisfied_neg, assign_neg = recurse(notsatisfied, set_var[0], set_var[1:], set_val)
+            num_satisfied_neg+=satcounter
         else:
-            numsatisfiedneg = satcounter
-            assignneg = setval
-        if numsatisfiedpos > numsatisfiedneg:
-            return numsatisfiedpos, assignpos
+            num_satisfied_neg = satcounter
+            assign_neg = set_val
+        if num_satisfied_pos > num_satisfied_neg:
+            return num_satisfied_pos, assign_pos
         else:
-            return numsatisfiedneg, assignneg
+            return num_satisfied_neg, assign_neg
         
     
