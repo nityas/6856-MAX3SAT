@@ -30,9 +30,9 @@ def round(inp,p):
 			assignment[literal-1] = 1*literal
 	return assignment
 
-
+#rewrite this as a set
 def num_literals(inp):
-	return max([abs(item) for sublist in inp for item in sublist])
+	return max([abs(literal) for clause in inp for literal in clause])
 
 def num_clauses(inp):
 	return len(inp)
