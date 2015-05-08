@@ -15,7 +15,7 @@ def round(inp,p):
 		return "invalid p"
 
 	assignment = {}
-	for literal in range(1,num_literals+1):
+	for literal in literals(inp):
 		r = random.random()
 		if p_is_list:
 			p_x = p[literal]
@@ -30,7 +30,10 @@ def round(inp,p):
 	return assignment
 
 def num_literals(inp):
-	return max([abs(literal) for clause in inp for literal in clause])
+	return len(literals(inp))
+
+def literals(inp):
+	return list(set([abs(literal) for clause in inp for literal in clause]))
 
 def num_clauses(inp):
 	return len(inp)
