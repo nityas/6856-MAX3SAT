@@ -1,0 +1,12 @@
+c A SAT instance generated from a 3-CNF formula that had 10 clauses and 750 variables
+p cnf 750 10
+-22 -302 -524 0
+-744 741 79 0
+303 372 528 0
+-743 -313 343 0
+175 -343 -445 0
+357 70 526 0
+94 471 -180 0
+-468 -353 428 0
+-202 -668 245 0
+-575 648 675 0

@@ -1,0 +1,7 @@
+c A SAT instance generated from a 3-CNF formula that had 5 clauses and 100 variables
+p cnf 100 5
+-63 -61 5 0
+83 92 -5 0
+-41 -89 77 0
+-11 -61 71 0
+90 -57 -28 0
