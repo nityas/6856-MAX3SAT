@@ -1,5 +1,4 @@
 import sys
-sys.path.insert(1, "/Library/Python/2.7/site-packages")
 from scipy.optimize import linprog
 from literal import *
 import math
@@ -10,8 +9,6 @@ def GW(instance):
     A, b, c, assign = satLP(instance, lit)
     var_prob = solveLP(A, b, c, assign)
     return var_prob
-
-
     
 def satLP(instance, literals):
     counter = len(instance)

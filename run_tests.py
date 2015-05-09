@@ -15,6 +15,7 @@ def cnf_to_python(file):
                 else:
                         print line_tokens
                         line_tokens = [int(i) for i in line_tokens[0:-1]]
+                        print line_tokens
                         if len(line_tokens) == 0:
                                 continue
                         instance.append(line_tokens)
