@@ -26,18 +26,19 @@ def load_testcases():
         return testcases
 
 def run_testcases(testcases):
-        f = open('results_'+str(int(time.time()))+'.txt','aw')
-        for filename, instance in testcases:
-                f.write(filename)
-                var_prob = GW(instance)
-                for p in range(0,11,1):
-                        rounded = rand_round(instance, var_prob)
-                        sol = satisfied_clauses(instance, rounded)
-                        result = combo_soln(instance, sol, float(p)/10)
-                        output = str(result)
-                        f.write(output) 
-        f.close()
-
+	f = open('results_'+str(int(time.time()))+'.txt','w+')
+	for filename, instance in testcases:
+		f.write(filename+'\n')
+		f.flush()
+		var_prob = GW(instance)
+		for p in range(0,11,1):
+			rounded = rand_round(instance, var_prob)
+			sol = satisfied_clauses(instance, rounded)
+			result = combo_max_sat(instance, sol, float(p)/10)
+			output = str(result)
+			f.write(output) 
+			f.flush()
+	f.close()
 
 
 def main():
@@ -46,4 +47,5 @@ def main():
 
 if __name__ == '__main__':
         main()
+
 
