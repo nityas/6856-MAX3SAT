@@ -1,0 +1,7 @@
+c A SAT instance generated from a 5-CNF formula that had 5 clauses and 1000 variables
+p cnf 1000 5
+-289 640 -249 899 865 0
+-79 244 892 -116 -135 0
+-26 224 -800 273 -952 0
+816 848 -563 -343 71 0
+-668 823 867 491 -372 0
