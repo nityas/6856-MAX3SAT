@@ -1,4 +1,5 @@
 import random
+import math
 
 def literals(inp):
 	return list(set([abs(literal) for clause in inp for literal in clause]))
@@ -14,7 +15,7 @@ def satisfied_clauses(inp, assignment):
 	satisfied_clauses = 0
 	for clause in inp:
 		for literal in clause:
-			if cmp(literal*assignment[literal],0) > 0:
+			if cmp(literal*assignment[int(math.fabs(literal))],0) > 0:
 				satisfied_clauses += 1
 				break
 	return satisfied_clauses
@@ -44,10 +45,11 @@ def rand_round(inp,p=0.5):
 		r = random.random()
 		if p_is_list:
 			p_x = p[literal]
+			print p_x
 		else:
 			p_x = p
 		# set to false
-		if random > p_x:
+		if r > p_x:
 			assignment[literal]= -1
 		# set to true with probability p
 		else:
