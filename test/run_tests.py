@@ -17,19 +17,19 @@ def cnf_to_python(file):
 	return instance
 
 #creates an array of testcases
-def load_testcases():
-	testcases = []
-	for filename in os.listdir('testcases'):
-		testcases.append(cnf_to_python('testcases/'+filename))
-	return testcases
-
-def run_testcases(testcases):
-	pass
-
-def main():
-	testcases = load_testcases()
-	run_testcases(testcases)
-
-if __name__ == '__main__':
-	main()
+##def load_testcases():
+##	testcases = []
+##	for filename in os.listdir('testcases'):
+##		testcases.append(cnf_to_python('testcases/'+filename))
+##	return testcases
+##
+##def run_testcases(testcases):
+##	pass
+##
+##def main():
+##	testcases = load_testcases()
+##	run_testcases(testcases)
+##
+##if __name__ == '__main__':
+##	main()
 
