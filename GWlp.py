@@ -9,11 +9,7 @@ def GW(instance):
     lit = literals(instance)
     A, b, c, assign = satLP(instance, lit)
     var_prob = solveLP(A, b, c, assign)
-    #rounded_var = rand_round(instance, var_prob)
-    #sol = satisfied_clauses(instance, rounded_var)
-    return var_prob#sol
-
-
+    return var_prob
     
 def satLP(instance, literals):
     counter = len(instance)
