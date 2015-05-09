@@ -24,7 +24,14 @@ def load_testcases():
 	return testcases
 
 def run_testcases(testcases):
-	pass
+	f = open('results_'+str(int(time.time()))+'.txt','a')
+	for instance in testcases:
+		for p in range(0.1,1,0.1):
+			result = combo_soln(testcase, p)
+			f.write(str(result)) 
+	f.close()
+
+
 
 def main():
 	testcases = load_testcases()
