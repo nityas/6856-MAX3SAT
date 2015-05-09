@@ -1,4 +1,5 @@
 import os
+import time
 from combo import *
 
 def cnf_to_python(file):
@@ -25,11 +26,11 @@ def load_testcases():
 	return testcases
 
 def run_testcases(testcases):
-	f = open('results_'+str(int(time.time()))+'.txt','a')
+	f = open('results_'+str(int(time.time()))+'.txt','aw')
 	for filename, instance in testcases:
 		f.write(filename)
-		for p in range(0.1,1.0,0.1):
-			result = combo_soln(testcase, p)
+		for p in range(0,11,1):
+			result = combo_soln(instance, float(p)/10)
 			output = str(result)
 			f.write(output) 
 	f.close()

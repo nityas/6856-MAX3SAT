@@ -23,6 +23,7 @@ def satisfied_clauses(inp, assignment):
 
 #Actual solver
 def naive_max_sat(inp,p=0.5):
+        print p
 	rounded_assignment = rand_round(inp,p)
 	return satisfied_clauses(inp,rounded_assignment)
 
@@ -39,6 +40,8 @@ def rand_round(inp,p=0.5):
 	elif (type(p) is dict) and (len(p) == num_lit):
 		p_is_list = True
 	else:
+                print p
+                print "polly"
 		return "invalid p"
 
 	assignment = {}
