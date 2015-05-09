@@ -6,10 +6,10 @@ import test
 def GW(instance):
     lit = literals(instance)
     A, b, c, assign = satLP(instance, lit)
-    x, var_prob = solveLP(A, b, c, assign)
-    rounded_var = rand_round(instance, var_prob)
-    sol = satisfied_clauses(instance, rounded_var)
-    return sol
+    var_prob = solveLP(A, b, c, assign)
+    #rounded_var = rand_round(instance, var_prob)
+    #sol = satisfied_clauses(instance, rounded_var)
+    return var_prob#sol
 
 
     
@@ -50,5 +50,5 @@ def solveLP(A, b, c, assigned):
     var_LP_val = {}
     for i in range(num_clauses, rowlen):
         var_LP_val[assigned[i]] = x[i]
-    return x, var_LP_val
+    return var_LP_val
         
