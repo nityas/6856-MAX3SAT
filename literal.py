@@ -1,4 +1,5 @@
 import random
+from combo import *
 
 #######
 #generate a random assignment with each var set to 
@@ -48,7 +49,7 @@ def satisfied_clauses(inp, assignment):
 				break
 	return satisfied_clauses
 
-#Actual solver
+#Naive Approx Solver
 def naive_max_sat(inp,p=0.5):
 	rounded_assignment = rand_round(inp,p)
 	return satisfied_clauses(inp,rounded_assignment)
