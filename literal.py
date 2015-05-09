@@ -1,5 +1,6 @@
 import random
 import math
+from combo import *
 
 def literals(inp):
 	return list(set([abs(literal) for clause in inp for literal in clause]))
@@ -55,4 +56,3 @@ def rand_round(inp,p=0.5):
 		else:
 			assignment[literal] = 1
 	return assignment
-
