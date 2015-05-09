@@ -6,7 +6,7 @@ import test
 def GW(instance):
     lit = literals(instance)
     A, b, c, assign = satLP(instance, lit)
-    var_prob = solveLP(A, b, c, assign)
+    x, var_prob = solveLP(A, b, c, assign)
     rounded_var = rand_round(instance, var_prob)
     sol = satisfied_clauses(instance, rounded_var)
     return sol
@@ -49,10 +49,6 @@ def solveLP(A, b, c, assigned):
     num_clauses = len(b)
     var_LP_val = {}
     for i in range(num_clauses, rowlen):
-##        print x
-##        print len(x)
-##        print i
-##        print assigned
         var_LP_val[assigned[i]] = x[i]
-    return var_LP_val
+    return x, var_LP_val
         
