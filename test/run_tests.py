@@ -20,15 +20,17 @@ def cnf_to_python(file):
 def load_testcases():
 	testcases = []
 	for filename in os.listdir('testcases'):
-		testcases.append(cnf_to_python('testcases/'+filename))
+		testcases.append((filename,cnf_to_python('testcases/'+filename)))
 	return testcases
 
 def run_testcases(testcases):
 	f = open('results_'+str(int(time.time()))+'.txt','a')
-	for instance in testcases:
+	for filename, instance in testcases:
+		f.write(filename)
 		for p in range(0.1,1,0.1):
 			result = combo_soln(testcase, p)
-			f.write(str(result)) 
+			output = 'p='+str(p)+': '+str(result)
+			f.write(output) 
 	f.close()
 
 
