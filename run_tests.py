@@ -26,13 +26,15 @@ def load_testcases():
 	return testcases
 
 def run_testcases(testcases):
-	f = open('results_'+str(int(time.time()))+'.txt','aw')
+	f = open('results_'+str(int(time.time()))+'.txt','w+')
 	for filename, instance in testcases:
-		f.write(filename)
+		f.write(filename+'\n')
+		f.flush()
 		for p in range(0,11,1):
-			result = combo_soln(instance, float(p)/10)
+			result = combo_max_sat(instance, float(p)/10)
 			output = str(result)
 			f.write(output) 
+			f.flush()
 	f.close()
 
 
@@ -43,4 +45,5 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
 
