@@ -5,7 +5,7 @@ import random
 #true with probability p, where p is either a list
 #of assignment probabilites or a single value
 #######
-def round(inp,p):
+def rand_round(inp,p=0.5):
 	num_literals = num_literals(inp)
 	if type(p) is float:
 		p_is_list = False
@@ -47,6 +47,11 @@ def satisfied_clauses(inp, assignment):
 				satisfied_clauses += 1
 				break
 	return satisfied_clauses
+
+#Actual solver
+def naive_max_sat(inp,p=0.5):
+	rounded_assignment = rand_round(inp,p)
+	return satisfied_clauses(inp,rounded_assignment)
 
 
 
