@@ -23,6 +23,7 @@ def dpll(instance, set_var, set_val={}):
     print num_satisfied, assign
 
 def recurse(instance, cvar, set_var, set_val):
+    print cvar
     notsatisfied = []
     satcounter = 0
     num_satisfied_pos = 0
