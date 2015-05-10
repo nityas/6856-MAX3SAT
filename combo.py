@@ -28,4 +28,4 @@ def combo_max_sat(inp, gw_sol, p=0.5):
                 result_str += "\nEqual: "+ str(gw_sol)
         else:
                 result_str += "\nNaive Better: "+ str(naive_sol)
-        return result_str
+        return result_str+="\n\n"
