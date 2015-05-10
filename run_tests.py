@@ -21,8 +21,9 @@ def cnf_to_python(file):
 #creates an array of testcases
 def load_testcases():
     testcases = []
-    for filename in os.listdir('testcases'):
-        testcases.append((filename,cnf_to_python('testcases/'+filename)))
+    dirtype='hard'
+    for filename in os.listdir(dirtype):
+        testcases.append((dirtype+'/'+filename,cnf_to_python(dirtype+'/'+filename)))
     return testcases
 
 def run_testcases(testcases):
