@@ -49,8 +49,9 @@ def run_testcases(testcases):
             results_naive.append(naive_sol)
 
         num_clauses, num_satisfied = exact_soln_info(filename)
-        k, num_literals = len(instance[0]), num_literals(instance)
-        resultsdict[filename] = [k, num_literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+        k= len(instance[0])
+        literals = num_literals(instance)
+        resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
         f.write(str(resultsdict[filename])+'\n')
         f.flush()
     f.close()
