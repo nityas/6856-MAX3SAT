@@ -54,7 +54,7 @@ def run_testcases(testcases):
         f.write(str(resultsdict[filename])+'\n')
         f.flush()
     f.close()
-    f2 = open('results_object_'+time_suffix+'.txt','aw')
+    f2 = open('results_object_'+time_suffix+'.json','aw')
     f2.write(str(resultsdict))
     f2.close()
     
