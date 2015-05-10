@@ -13,16 +13,12 @@ import re
 #       else:
 #               return ("naive",gw_sol,naive_sol)
 
+
 def combo_max_sat(inp, gw_sol, p=0.5):
     result_str = "\nGW Solution: "+ str(gw_sol)
 
     naive_sol = naive_max_sat(inp,p)
     result_str += "\nNaive Approx Solution: "+ str(naive_sol)
-    print literals(inp)
-    print len(literals(inp))
-    print "#yolo"
-    #dpll_sol = dpll(inp, literals(inp))[0]
-    #result_str += "\nExact Solution: "+ str(naive_sol)
     if gw_sol > naive_sol:
         result_str += "\nGW Better: "+ str(gw_sol)
     elif gw_sol == naive_sol:
@@ -39,4 +35,3 @@ def exact_soln_info(filename):
     num_satisfied = int(num_clauses) - int(num_unsatisfied)
     result_str = "\nEXACT SOLUTION:\ntotal clauses: "+num_clauses+"\nclauses satisfied: "+str(num_satisfied)
     return result_str+"\n"
-

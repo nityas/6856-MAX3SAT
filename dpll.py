@@ -1,6 +1,8 @@
 import copy
+import sys
 ##An exact Max-SAT solver
 def dpll(instance, set_var, set_val={}):
+    sys.setrecursionlimit(1500)
     instance.sort(key = lambda s: len(s)) #sort by length,
                                           #so single var clauses are first
     counter = 0
@@ -20,10 +22,9 @@ def dpll(instance, set_var, set_val={}):
     set_var = set_var[1:]
     num_satisfied, assign = recurse(instance[counter:], cvar, set_var, set_val)
     num_satisfied += counter
-    print num_satisfied, assign
+    return (num_satisfied, assign)
 
 def recurse(instance, cvar, set_var, set_val):
-    print cvar
     notsatisfied = []
     satcounter = 0
     num_satisfied_pos = 0
@@ -81,3 +82,5 @@ def recurse(instance, cvar, set_var, set_val):
             return num_satisfied_neg, assign_neg
         
     
+def brute_force(instance, set_var):
+    pass
