@@ -1,6 +1,10 @@
 import os
 import time
 from combo import *
+import numpy as np
+
+def getstats(results):
+    return np.amin(results),np.amax(results),np.mean(results),np.median(results)
 
 def cnf_to_python(file):
     f=open(file)
@@ -21,26 +25,39 @@ def cnf_to_python(file):
 #creates an array of testcases
 def load_testcases():
     testcases = []
-    dirtype='hard'
+    dirtype='testcases'
     for filename in os.listdir(dirtype):
         testcases.append((dirtype+'/'+filename,cnf_to_python(dirtype+'/'+filename)))
     return testcases
 
 def run_testcases(testcases):
-    f = open('results_'+str(int(time.time()))+'.txt','aw')
+    time_suffix = str(int(time.time()))
+    f = open('readable_results_'+time_suffix+'.txt','aw')
+    resultsdict = {}
     for filename, instance in testcases:
-        f.write(filename)
-        f.write(exact_soln_info(filename))
+        f.write(filename+'\n')
         f.flush()
         var_prob = GW(instance)
+        results_gw = []
+        results_naive = []
         for p in range(0,11,1):
             rounded = rand_round(instance, var_prob)
-            sol = satisfied_clauses(instance, rounded)
-            result = combo_max_sat(instance, sol, float(p)/10)
-            output = str(result)
-            f.write(output) 
-            f.flush()
+            gw_sol = satisfied_clauses(instance, rounded)
+            naive_sol = naive_max_sat(instance,float(p)/10)
+            results_gw.append(gw_sol)
+            results_naive.append(naive_sol)
+
+        num_clauses, num_satisfied = exact_soln_info(filename)
+        resultsdict[filename] = [num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+        f.write(str(resultsdict[filename])+'\n')
+        f.flush()
     f.close()
+    f2 = open('results_object_'+time_suffix+'.txt','aw')
+    f2.write(str(resultsdict))
+    f2.close()
+    
+
+
 
 def main():
     testcases = load_testcases()
