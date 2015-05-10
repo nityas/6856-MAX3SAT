@@ -1,5 +1,5 @@
 import sys
-#sys.path.insert(1, "/Library/Python/2.7/site-packages")
+sys.path.insert(1, "/Library/Python/2.7/site-packages")
 from scipy.optimize import linprog
 from literal import *
 import math

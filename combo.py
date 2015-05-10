@@ -2,6 +2,7 @@ from literal import *
 from GWlp import *
 from dpll import *
 import subprocess
+import re
 
 # def combo_soln(inp,gw_sol, p=0.5):
 #       naive_sol = naive_max_sat(inp,p)
@@ -24,15 +25,13 @@ def combo_max_sat(inp, gw_sol, p=0.5):
         result_str += "\nEqual: "+ str(gw_sol)
     else:
         result_str += "\nNaive Better: "+ str(naive_sol)
-    result_str+="\n\n"
-    return result_str
+    return result_str+"\n\n"
 
 def exact_soln_info(filename):
-    args = ["java", "-jar", "sat4j-maxsat.jar","testcases/"+filename]
+    args = ["java", "-jar", "sat4j-maxsat.jar",filename]
     out = subprocess.check_output(args)
     num_unsatisfied = re.findall("objective function=.*",out)[0].split('=')[1]
     num_clauses = re.findall(" org.sat4j.minisat.constraints.cnf.OriginalWLClause => .*",out)[0].split('=>')[1]
     num_satisfied = int(num_clauses) - int(num_unsatisfied)
-    result_str = "EXACT SOLUTION:\ntotal clauses: "+num_clauses+"\nclauses satisfied: "+str(num_satisfied)
-    result_str+="\n"
-    return result_str
+    result_str = "\nEXACT SOLUTION:\ntotal clauses: "+num_clauses+"\nclauses satisfied: "+str(num_satisfied)
+    return result_str+"\n"
