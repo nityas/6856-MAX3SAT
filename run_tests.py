@@ -2,6 +2,7 @@ import os
 import time
 from combo import *
 import numpy as np
+from literal import *
 
 def getstats(results):
     return np.amin(results),np.amax(results),np.mean(results),np.median(results)
@@ -25,7 +26,7 @@ def cnf_to_python(file):
 #creates an array of testcases
 def load_testcases():
     testcases = []
-    dirtype='testcases'
+    dirtype='hard'
     for filename in os.listdir(dirtype):
         testcases.append((dirtype+'/'+filename,cnf_to_python(dirtype+'/'+filename)))
     return testcases
@@ -48,7 +49,8 @@ def run_testcases(testcases):
             results_naive.append(naive_sol)
 
         num_clauses, num_satisfied = exact_soln_info(filename)
-        resultsdict[filename] = [num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+        k, num_literals = len(instance[0]), num_literals(instance)
+        resultsdict[filename] = [k, num_literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
         f.write(str(resultsdict[filename])+'\n')
         f.flush()
     f.close()
