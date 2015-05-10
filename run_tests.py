@@ -21,8 +21,9 @@ def cnf_to_python(file):
 #creates an array of testcases
 def load_testcases():
         testcases = []
-        for filename in os.listdir('testcases'):
-                testcases.append((filename,cnf_to_python('testcases/'+filename)))
+        filename = "021random_ksat.cnf"
+        #for filename in os.listdir('testcases'):
+        testcases.append((filename,cnf_to_python('testcases/'+filename)))
         return testcases
 
 def run_testcases(testcases):
@@ -30,10 +31,13 @@ def run_testcases(testcases):
         for filename, instance in testcases:
                 f.write(filename)
                 var_prob = GW(instance)
+                (dpll_sol, assign) = dpll(instance, literals(instance))
+                print assign
                 for p in range(0,11,1):
                         rounded = rand_round(instance, var_prob)
                         sol = satisfied_clauses(instance, rounded)
-                        result = combo_max_sat(instance, sol, float(p)/10)
+ 
+                        result = combo_max_sat(instance, sol, dpll_sol, float(p)/10)
                         output = str(result)
                         f.write(output) 
         f.close()
