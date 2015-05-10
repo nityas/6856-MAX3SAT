@@ -29,7 +29,7 @@ def combo_max_sat(inp, gw_sol, p=0.5):
 
 def exact_soln_info(filename):
     args = ["java", "-jar", "sat4j-maxsat.jar","testcases/"+filename]
-    out = subprocess.check_output()
+    out = subprocess.check_output(args)
     num_unsatisfied = re.findall("objective function=.*",out)[0].split('=')[1]
     num_clauses = re.findall(" org.sat4j.minisat.constraints.cnf.OriginalWLClause => .*",out)[0].split('=>')[1]
     num_satisfied = int(num_clauses) - int(num_unsatisfied)
