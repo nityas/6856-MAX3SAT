@@ -35,7 +35,7 @@ def exact_soln_info(filename):
     out = subprocess.check_output()
     num_unsatisfied = re.findall("objective function=.*",out)[0].split('=')[1])
     num_clauses = re.findall(" org.sat4j.minisat.constraints.cnf.OriginalWLClause => .*",out)[0].split('=>')[1])
-    num_satisfied = num_clauses - num_unsatisfied
-    result_str = "EXACT SOLUTION: \ntotal clauses: "+num_clauses+"clauses satisfied: "+num_satisfied
-    return result_str
+    num_satisfied = int(num_clauses) - int(num_unsatisfied)
+    result_str = "EXACT SOLUTION:\ntotal clauses: "+num_clauses+"\nclauses satisfied: "+str(num_satisfied)
+    return result_str += "\n"
 
