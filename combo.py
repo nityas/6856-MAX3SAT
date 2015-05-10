@@ -22,14 +22,13 @@ def combo_max_sat(inp, gw_sol, p=0.5):
     print "#yolo"
     #dpll_sol = dpll(inp, literals(inp))[0]
     #result_str += "\nExact Solution: "+ str(naive_sol)
-
     if gw_sol > naive_sol:
-            result_str += "\nGW Better: "+ str(gw_sol)
+        result_str += "\nGW Better: "+ str(gw_sol)
     elif gw_sol == naive_sol:
-            result_str += "\nEqual: "+ str(gw_sol)
+        result_str += "\nEqual: "+ str(gw_sol)
     else:
-            result_str += "\nNaive Better: "+ str(naive_sol)
-    return result_str
+        result_str += "\nNaive Better: "+ str(naive_sol)
+    return result_str+="\n\n"
 
 def exact_soln_info(filename):
     args = ["java", "-jar", "sat4j-maxsat.jar","testcases/"+filename]
@@ -39,3 +38,4 @@ def exact_soln_info(filename):
     num_satisfied = num_clauses - num_unsatisfied
     result_str = "EXACT SOLUTION: \ntotal clauses: "+num_clauses+"clauses satisfied: "+num_satisfied
     return result_str
+
