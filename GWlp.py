@@ -8,8 +8,8 @@ import test
 def GW(instance):
     lit = literals(instance)
     A, b, c, assign = satLP(instance, lit)
-    var_prob = solveLP(A, b, c, assign)
-    return var_prob
+    var_prob, status = solveLP(A, b, c, assign)
+    return var_prob, status
     
 def satLP(instance, literals):
     counter = len(instance)
@@ -42,11 +42,11 @@ def solveLP(A, b, c, assigned):
     bound = ()
     for i in range(0, rowlen):
         bound +=((0,1),)
-    res = linprog(c, A_ub=A, b_ub=b, bounds = bound, options={"disp":True})
+    res = linprog(c, A_ub=A, b_ub=b, bounds = bound, options={"maxiter":3000, "disp":True})
     x = res.x
     num_clauses = len(b)
     var_LP_val = {}
     for i in range(num_clauses, rowlen):
         var_LP_val[assigned[i]] = x[i]
-    return var_LP_val
+    return var_LP_val, res.status
         

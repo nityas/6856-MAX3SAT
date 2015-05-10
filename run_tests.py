@@ -37,7 +37,7 @@ def run_testcases(testcases):
     for filename, instance in testcases:
         f.write(filename+'\n')
         f.flush()
-        var_prob = GW(instance)
+        var_prob, status = GW(instance)
         results_gw = []
         results_naive = []
         for p in range(0,11,1):
@@ -50,6 +50,8 @@ def run_testcases(testcases):
         num_clauses, num_satisfied = exact_soln_info(filename)
         resultsdict[filename] = [num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
         f.write(str(resultsdict[filename])+'\n')
+        if status == 1:
+            f.write("Recursion depth exceeded. Need to run again\n")
         f.flush()
     f.close()
     f2 = open('results_object_'+time_suffix+'.txt','aw')
