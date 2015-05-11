@@ -4,6 +4,9 @@ from combo import *
 import numpy as np
 from literal import *
 
+dirtype='80v'
+competition = True
+
 def getstats(results):
     return np.amin(results),np.amax(results),np.mean(results),np.median(results)
 
@@ -26,7 +29,7 @@ def cnf_to_python(file):
 #creates an array of testcases
 def load_testcases():
     testcases = []
-    dirtype='80v'
+    
     for filename in os.listdir(dirtype):
         testcases.append((dirtype+'/'+filename,cnf_to_python(dirtype+'/'+filename)))
     return testcases
@@ -52,10 +55,18 @@ def run_testcases(testcases):
             results_gw.append(gw_sol)
             results_naive.append(naive_sol)
 
-        num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
+        if competition:
+            num_clauses = len(instance)
+            ftemp = open(filename)
+            num_satisfied = int(re.findall("c desired:.*",ftemp.read())[0].split(':')[1])
+        else:   
+            num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
         k= len(instance[0])
         literals = num_literals(instance)
-        resultsdict[filename] = [k, literals, num_clauses, num_satisfied, time_exact, time_gw, getstats(results_gw), getstats(results_naive)]
+        num_clauses = 
+        if 
+        num_satisfied = 
+        resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
         f.write(str(resultsdict[filename])+'\n')
         if status == 1:
             f.write("Recursion depth exceeded. Need to run again\n")
