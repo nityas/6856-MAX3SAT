@@ -41,6 +41,7 @@ def run_testcases(testcases):
         var_prob, status = GW(instance)
         results_gw = []
         results_naive = []
+        #TODO: add timer
         for p in range(0,11,1):
             rounded = rand_round(instance, var_prob)
             gw_sol = satisfied_clauses(instance, rounded)
