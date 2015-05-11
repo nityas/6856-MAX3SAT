@@ -26,7 +26,7 @@ def cnf_to_python(file):
 #creates an array of testcases
 def load_testcases():
     testcases = []
-    dirtype='hard'
+    dirtype='80v'
     for filename in os.listdir(dirtype):
         testcases.append((dirtype+'/'+filename,cnf_to_python(dirtype+'/'+filename)))
     return testcases
@@ -38,7 +38,10 @@ def run_testcases(testcases):
     for filename, instance in testcases:
         f.write(filename+'\n')
         f.flush()
+        t1 = time.time()
         var_prob, status = GW(instance)
+        t2 = time.time()
+        time_gw = t2-t1
         results_gw = []
         results_naive = []
         #TODO: add timer
@@ -49,10 +52,10 @@ def run_testcases(testcases):
             results_gw.append(gw_sol)
             results_naive.append(naive_sol)
 
-        num_clauses, num_satisfied = exact_soln_info(filename)
+        num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
         k= len(instance[0])
         literals = num_literals(instance)
-        resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+        resultsdict[filename] = [k, literals, num_clauses, num_satisfied, time_exact, time_gw, getstats(results_gw), getstats(results_naive)]
         f.write(str(resultsdict[filename])+'\n')
         if status == 1:
             f.write("Recursion depth exceeded. Need to run again\n")

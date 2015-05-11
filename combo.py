@@ -2,6 +2,7 @@ from literal import *
 from GWlp import *
 from dpll import *
 import subprocess
+import time
 import re
 
 # def combo_soln(inp,gw_sol, p=0.5):
@@ -29,9 +30,11 @@ def combo_max_sat(inp, gw_sol, p=0.5):
 
 def exact_soln_info(filename):
     args = ["java", "-jar", "sat4j-maxsat.jar",filename]
+    t1 = time.time()
     out = subprocess.check_output(args)
+    t2 = time.time()
     num_unsatisfied = re.findall("objective function=.*",out)[0].split('=')[1]
     num_clauses = int(re.findall(" org.sat4j.minisat.constraints.cnf.OriginalWLClause => .*",out)[0].split('=>')[1])
     num_satisfied = num_clauses - int(num_unsatisfied)
     #result_str = "\nEXACT SOLUTION:\ntotal clauses: "+num_clauses+"\nclauses satisfied: "+str(num_satisfied)
-    return num_clauses,num_satisfied
+    return num_clauses,num_satisfied,t2-t1
