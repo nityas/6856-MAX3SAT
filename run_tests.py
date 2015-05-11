@@ -4,7 +4,7 @@ from combo import *
 import numpy as np
 from literal import *
 
-dirtype='3sat'
+dirtype='4sat'
 competition = True
 
 def getstats(results):
