@@ -4,7 +4,7 @@ from combo import *
 import numpy as np
 from literal import *
 
-dirtype='80v'
+dirtype='3sat'
 competition = True
 
 def getstats(results):
@@ -61,11 +61,10 @@ def run_testcases(testcases):
             num_satisfied = int(re.findall("c desired:.*",ftemp.read())[0].split(':')[1])
         else:   
             num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
+
         k= len(instance[0])
         literals = num_literals(instance)
-        num_clauses = 
-        if 
-        num_satisfied = 
+
         resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
         f.write(str(resultsdict[filename])+'\n')
         if status == 1:
