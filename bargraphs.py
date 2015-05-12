@@ -3,9 +3,9 @@ import json
 import yaml
 import numpy as np
 
-fname="results_object_hard.json"
+fname="results_object_4sat.json"
 def k_vs_performance(data):
-    rel_data = [(float(row[0]),float(row[3]),float(row[7]),float(row[11])) 
+    rel_data = [(float(row[1]),float(row[3]),float(row[7]),float(row[11])) 
                 for row in data.values()]
 
     data_vals = {}
@@ -25,13 +25,15 @@ def k_vs_performance(data):
         naive_means.append(np.mean([i[1] for i in data_vals[k_val]]))
 
     fig, ax = plt.subplots()
-    r1 = plt.plot(k, gw_means, 'ro')
-    r2 = plt.plot(k, naive_means, 'bo')
+    ax.set_xticks([k[i]+5 for i in range(len(k))])
+    ax.set_xticklabels( ('100','150') )
+    r1 = plt.bar(k, gw_means, 5, color='r')
+    r2 = plt.bar([k[i]+5 for i in range(len(k))], naive_means, 5, color='b')
+    plt.axis([90,170,0.9,1.0])
     ax.legend( (r1[0], r2[0]), ('GW', 'Naive') )
-    plt.axis([1,11,0.85,1.0])
     plt.ylabel('approximation')
-    plt.xlabel('k')
-    plt.title('Accuracy vs. k for Hard Random Testcase Set')
+    plt.xlabel('num_vars')
+    plt.title('Accuracy vs. Number of Variables for Competition 4-MAX SAT')
     plt.show()
 
 
