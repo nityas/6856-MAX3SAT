@@ -4,7 +4,7 @@ from combo import *
 import numpy as np
 from literal import *
 
-dirtype='70v'
+dirtype='80v'
 competition = True
 
 def getstats(results):
@@ -39,8 +39,11 @@ def run_testcases(testcases):
     f = open('readable_results_'+time_suffix+'.txt','aw')
     resultsdict = {}
     satisfied = parse_opt()
+    print satisfied
     for filename, instance in testcases:
-        if filename in satisfied.keys():
+        print filename
+        tmp = filename.replace(dirtype+"/", "")
+        if tmp in satisfied.keys():
             f.write(filename+'\n')
             f.flush()
             t1 = time.time()
@@ -60,7 +63,7 @@ def run_testcases(testcases):
             if competition:
                 num_clauses = len(instance)
                 ftemp = open(filename)
-                num_satisfied = satisfied[filename]#int(re.findall("c desired:.*",ftemp.read())[0].split(':')[1])
+                num_satisfied = satisfied[tmp]#int(re.findall("c desired:.*",ftemp.read())[0].split(':')[1])
             else:   
                 num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
 
@@ -72,6 +75,8 @@ def run_testcases(testcases):
             if status == 1:
                 f.write("Recursion depth exceeded. Need to run again\n")
             f.flush()
+        else:
+            print "not"
     f.close()
     f2 = open('results_object_'+time_suffix+'.json','aw')
     f2.write(str(resultsdict))
