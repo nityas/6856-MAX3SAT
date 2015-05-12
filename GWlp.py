@@ -42,7 +42,7 @@ def solveLP(A, b, c, assigned):
     bound = ()
     for i in range(0, rowlen):
         bound +=((0,1),)
-    res = linprog(c, A_ub=A, b_ub=b, bounds = bound, options={"maxiter":3000, "disp":True})
+    res = linprog(c, A_ub=A, b_ub=b, bounds = bound, options={"maxiter":10000, "disp":True})
     x = res.x
     num_clauses = len(b)
     var_LP_val = {}
