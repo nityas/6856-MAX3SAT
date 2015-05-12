@@ -4,7 +4,7 @@ from combo import *
 import numpy as np
 from literal import *
 
-dirtype='80v'
+dirtype='70v'
 competition = True
 
 def getstats(results):
@@ -39,7 +39,6 @@ def run_testcases(testcases):
     f = open('readable_results_'+time_suffix+'.txt','aw')
     resultsdict = {}
     satisfied = parse_opt()
-    print satisfied
     for filename, instance in testcases:
         print filename
         tmp = filename.replace(dirtype+"/", "")
@@ -50,15 +49,19 @@ def run_testcases(testcases):
             var_prob, status = GW(instance)
             t2 = time.time()
             time_gw = t2-t1
-            results_gw = []
-            results_naive = []
+            # results_gw = []
+            # results_naive = []
             #TODO: add timer
-            for p in range(0,11,1):
-                rounded = rand_round(instance, var_prob)
-                gw_sol = satisfied_clauses(instance, rounded)
-                naive_sol = naive_max_sat(instance,float(p)/10)
-                results_gw.append(gw_sol)
-                results_naive.append(naive_sol)
+            # for p in range(0,11,1):
+            #     rounded = rand_round(instance, var_prob)
+            #     gw_sol = satisfied_clauses(instance, rounded)
+            #     naive_sol = naive_max_sat(instance,float(p)/10)
+            #     results_gw.append(gw_sol)
+            #     results_naive.append(naive_sol)
+            p=0.5
+            rounded = rand_round(instance, var_prob)
+            results_gw = satisfied_clauses(instance, rounded)
+            results_naive = naive_max_sat(instance,p)
 
             if competition:
                 num_clauses = len(instance)
@@ -70,7 +73,9 @@ def run_testcases(testcases):
             k= len(instance[0])
             literals = num_literals(instance)
 
-            resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+            #resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+            resultsdict[filename] = [k, literals, num_clauses, num_satisfied, results_gw, results_naive]
+
             f.write(str(resultsdict[filename])+'\n')
             if status == 1:
                 f.write("Recursion depth exceeded. Need to run again\n")
