@@ -4,7 +4,7 @@ from combo import *
 import numpy as np
 from literal import *
 
-dirtype='4sat'
+dirtype='70v'
 competition = True
 
 def getstats(results):
@@ -38,44 +38,60 @@ def run_testcases(testcases):
     time_suffix = str(int(time.time()))
     f = open('readable_results_'+time_suffix+'.txt','aw')
     resultsdict = {}
+    satisfied = parse_opt()
     for filename, instance in testcases:
-        f.write(filename+'\n')
-        f.flush()
-        t1 = time.time()
-        var_prob, status = GW(instance)
-        t2 = time.time()
-        time_gw = t2-t1
-        results_gw = []
-        results_naive = []
-        #TODO: add timer
-        for p in range(0,11,1):
-            rounded = rand_round(instance, var_prob)
-            gw_sol = satisfied_clauses(instance, rounded)
-            naive_sol = naive_max_sat(instance,float(p)/10)
-            results_gw.append(gw_sol)
-            results_naive.append(naive_sol)
+        if filename in satisfied.keys():
+            f.write(filename+'\n')
+            f.flush()
+            t1 = time.time()
+            var_prob, status = GW(instance)
+            t2 = time.time()
+            time_gw = t2-t1
+            results_gw = []
+            results_naive = []
+            #TODO: add timer
+            for p in range(0,11,1):
+                rounded = rand_round(instance, var_prob)
+                gw_sol = satisfied_clauses(instance, rounded)
+                naive_sol = naive_max_sat(instance,float(p)/10)
+                results_gw.append(gw_sol)
+                results_naive.append(naive_sol)
 
-        if competition:
-            num_clauses = len(instance)
-            ftemp = open(filename)
-            num_satisfied = int(re.findall("c desired:.*",ftemp.read())[0].split(':')[1])
-        else:   
-            num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
+            if competition:
+                num_clauses = len(instance)
+                ftemp = open(filename)
+                num_satisfied = satisfied[filename]#int(re.findall("c desired:.*",ftemp.read())[0].split(':')[1])
+            else:   
+                num_clauses, num_satisfied, time_exact = exact_soln_info(filename)
 
-        k= len(instance[0])
-        literals = num_literals(instance)
+            k= len(instance[0])
+            literals = num_literals(instance)
 
-        resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
-        f.write(str(resultsdict[filename])+'\n')
-        if status == 1:
-            f.write("Recursion depth exceeded. Need to run again\n")
-        f.flush()
+            resultsdict[filename] = [k, literals, num_clauses, num_satisfied, getstats(results_gw), getstats(results_naive)]
+            f.write(str(resultsdict[filename])+'\n')
+            if status == 1:
+                f.write("Recursion depth exceeded. Need to run again\n")
+            f.flush()
     f.close()
     f2 = open('results_object_'+time_suffix+'.json','aw')
     f2.write(str(resultsdict))
     f2.close()
     
-
+def parse_opt():
+    g = open("ahmaxsat-ls-ms_random-COMPLETE-1800-3500-2.txt")
+    satisfied = {}
+    for line in g.readlines():
+        line = line.replace('\t',' ')
+        line.strip('\n')
+        line_tokens = line.split(' ')
+        if line_tokens[2] == "OPTIMUM_FOUND":
+            filename = line_tokens[0].split("/")[-1]
+            num_clauses = int(line_tokens[11])
+            num_unsatisfied = int(line_tokens[3])
+            num_satisfied = num_clauses - num_unsatisfied
+            satisfied[filename] = num_satisfied
+    return satisfied
+        
 
 
 def main():
