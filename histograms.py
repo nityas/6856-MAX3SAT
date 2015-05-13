@@ -3,7 +3,7 @@ import json
 import yaml
 import numpy as np
 
-fname="results_object_3sat.json"
+fname="results_object_80v.json"
 def k_vs_performance(data):
     rel_data = [(float(row[0]),float(row[3]),float(row[7]),float(row[11])) 
                 for row in data.values()]
@@ -25,12 +25,12 @@ def k_vs_performance(data):
         naive_vals += [i[1] for i in data_vals[k_val]]
 
     #fig, ax = plt.subplots()
+    #plt.hist(gw_vals, 10, facecolor='red')
     plt.hist(naive_vals, 10, facecolor='blue')
-    #plt.hist(naive_vals, 10, facecolor='blue')
-    plt.axis([0.86,0.89,1,15])
+    plt.axis([0.85,0.95,1,15])
     plt.ylabel('Number of testcases')
     plt.xlabel('approximation')
-    plt.title('Johnsons Accuracy Distribution for Competition 3-MAX SAT')
+    plt.title('GW Accuracy Distribution for Competition MAX 3-SAT with 80 variables')
     plt.show()
 
 
